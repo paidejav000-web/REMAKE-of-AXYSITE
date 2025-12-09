@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Suggestions / Reports</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="grid"></div>
+
+<header>
+  <h1>AXY Study Site</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="notes.html">Notes</a>
+    <a href="bypasses.html">Bypasses</a>
+    <a href="music.html">Music</a>
+    <a href="credits.html">Credits</a>
+    <a href="other1.html">Suggestions/Reports</a>
+    <a href="other2.html">Other</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Suggestions / Reports</h2>
+  <p>Submit suggestions or bug reports — saved locally.</p>
+</section>
+
+<main>
+<div class="notice">Your reports are saved to localStorage in this demo.</div>
+<textarea id="reportText" placeholder="Type feedback or a bug report..." style="width:90%;max-width:900px;height:140px;padding:10px;border-radius:8px;background:#111;color:#fff;border:none"></textarea>
+<div style="margin-top:8px"><button id="saveReport" style="padding:8px 12px;border-radius:8px;background:#111;color:#fff;border:none;cursor:pointer">Save Report</button>
+<button id="viewReports" style="padding:8px 12px;border-radius:8px;background:#111;color:#fff;border:none;cursor:pointer">View Saved</button></div>
+<div id="reportsList" style="margin-top:12px;max-width:900px;margin-left:auto;margin-right:auto;text-align:left"></div>
+<script>
+(function(){
+  const save = document.getElementById('saveReport'), view = document.getElementById('viewReports'), txt = document.getElementById('reportText'), listEl = document.getElementById('reportsList');
+  save.addEventListener('click', ()=>{
+    const t = txt.value.trim();
+    if(!t){ alert('Type something first'); return; }
+    const arr = JSON.parse(localStorage.getItem('AXYReports')||'[]');
+    arr.push({text:t,time:new Date().toISOString()});
+    localStorage.setItem('AXYReports', JSON.stringify(arr));
+    txt.value=''; alert('Saved locally!');
+  });
+  view.addEventListener('click', ()=>{
+    const arr = JSON.parse(localStorage.getItem('AXYReports')||'[]');
+    if(!arr.length){ listEl.innerHTML='<p>No reports yet.</p>'; return; }
+    listEl.innerHTML = arr.map(r=>`<div style="background:#111;padding:8px;border-radius:8px;margin-bottom:6px"><strong>${new Date(r.time).toLocaleString()}</strong><p>${r.text}</p></div>`).join('');
+  });
+})();
+</script>
+
+</main>
+
+<footer>© 2025 AXY Study Site. All rights reserved.</footer>
+
+<!-- Theme Box -->
+<div id="themeBox">
+  Theme:
+  <select id="themeSelect">
+    <option value="red">Red</option>
+    <option value="navy">Navy Blue</option>
+    <option value="green">Cyber Green</option>
+    <option value="purple">Purple</option>
+    <option value="custom">Customize...</option>
+  </select>
+</div>
+
+<!-- Customize Panel -->
+<div id="customPanel">
+  <div><label>Main:</label><input type="color" id="mainColor" value="#ff1e1e"></div>
+  <div><label>Glow:</label><input type="color" id="glowColor" value="#ff3c3c"></div>
+  <div><label>Trail:</label><input type="color" id="trailColor" value="#ff3232"></div>
+  <div><label>Ambient:</label><input type="color" id="ambientColor" value="#ff3232"></div>
+  <div><label>Body BG:</label><input type="color" id="bgColor" value="#190000"></div>
+  <div><label>Hero BG:</label><input type="color" id="heroBgColor" value="#190000"></div>
+  <div><label>Footer BG:</label><input type="color" id="footerBgColor" value="#0a0000"></div>
+  <button id="saveCustom">Save Theme</button>
+  <button id="resetTheme">Reset to Red</button>
+</div>
+
+<script src="theme.js"></script>
+</body>
+</html>

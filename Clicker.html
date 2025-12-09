@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AXY Money Clicker</title>
+  <style>
+    /* Classic Windows 95-ish style */
+    body {
+      font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+      background: #c0c0c0;
+      color: black;
+      margin: 0;
+      padding: 20px;
+      user-select: none;
+    }
+
+    h1 {
+      background: #000080;
+      color: white;
+      font-weight: bold;
+      padding: 6px 10px;
+      margin: 0 0 15px 0;
+      border: 2px solid #ffffff;
+    }
+
+    #money {
+      font-size: 28px;
+      margin: 20px 0;
+      background: white;
+      border: 2px inset #fff;
+      padding: 10px;
+      width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button {
+      font-family: inherit;
+      font-size: 14px;
+      padding: 6px 10px;
+      margin: 5px;
+      border: 2px outset #fff;
+      background: #c0c0c0;
+      cursor: pointer;
+    }
+
+    button:active {
+      border-style: inset;
+    }
+
+    #clickButton {
+      background: #000080;
+      color: white;
+      font-weight: bold;
+      font-size: 22px;
+      padding: 15px 40px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+
+    .section {
+      background: #e0e0e0;
+      border: 2px outset #fff;
+      padding: 10px;
+      margin: 10px auto;
+      max-width: 350px;
+    }
+
+    .shop-item {
+      border: 2px inset #fff;
+      padding: 5px;
+      margin: 5px 0;
+    }
+
+    .shop-item strong {
+      display: block;
+    }
+
+    #message {
+      height: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin: 5px 0 10px 0;
+      color: #800000;
+    }
+
+    #casino {
+      margin-top: 15px;
+    }
+
+    #slots {
+      font-size: 40px;
+      letter-spacing: 10px;
+      background: white;
+      padding: 10px;
+      border: 2px inset #fff;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+
+    #slotsMessage {
+      height: 20px;
+      font-weight: bold;
+      color: #008000;
+    }
+
+    #achievements {
+      max-height: 150px;
+      overflow-y: auto;
+      background: white;
+      border: 2px inset #fff;
+      padding: 5px;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    #achievements h3 {
+      margin: 0 0 5px 0;
+    }
+
+    #prestige-info {
+      font-size: 14px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    #saveImportExport {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      font-family: monospace;
+      width: 90%;
+      margin: 5px 0;
+      padding: 5px;
+      border: 2px inset #fff;
+    }
+
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>AXY Money Clicker</h1>
+  <div id="money">$0</div>
+  <button id="clickButton">Tap to Make Money</button>
+  <div id="message"></div>
+
+  <div class="section">
+    <h2>Upgrades</h2>
+    <div class="shop-item">
+      <strong>Better Taps</strong>
+      +$1 per click<br />
+      Cost: $<span id="clickUpgradeCost">50</span><br />
+      <button id="buyClickUpgrade">Buy</button>
+    </div>
+    <div class="shop-item">
+      <strong>Auto Clicker</strong>
+      +$1/sec<br />
+      Cost: $<span id="autoClickerCost">100</span><br />
+      Owned: <span id="autoClickerCount">0</span><br />
+      <button id="buyAutoClicker">Buy</button>
+    </div>
+    <div class="shop-item">
+      <strong>Mega Tap</strong>
+      +$10 per click<br />
+      Cost: $<span id="megaTapCost">1000</span><br />
+      Owned: <span id="megaTapCount">0</span><br />
+      <button id="buyMegaTap">Buy</button>
+    </div>
+    <div class="shop-item">
+      <strong>Super Auto Clicker</strong>
+      +$10/sec<br />
+      Cost: $<span id="superAutoClickerCost">5000</span><br />
+      Owned: <span id="superAutoClickerCount">0</span><br />
+      <button id="buySuperAutoClicker">Buy</button>
+    </div>
+    <div class="shop-item">
+      <strong>Multiplier Upgrade</strong>
+      +0.1x multiplier<br />
+      Cost: $<span id="multiplierUpgradeCost">10000</span><br />
+      Owned: <span id="multiplierUpgradeCount">0</span><br />
+      <button id="buyMultiplierUpgrade">Buy</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Prestige</h2>
+    <div id="prestige-info">Prestige Points: <span id="prestigePoints">0</span><br />
+      Multiplier: <span id="prestigeMultiplier">1.0</span>x</div>
+    <button id="prestigeButton">Prestige (Need $1,000,000)</button>
+  </div>
+
+  <div class="section" id="casino">
+    <h2>🎰 Casino</h2>
+    <div id="slots">🍒 🍋 🍉</div>
+    <div id="slotsMessage"></div>
+    <button id="slotsSpinBtn">Spin Slots ($10)</button>
+  </div>
+
+  <div class="section">
+    <h2>Achievements</h2>
+    <div id="achievements">
+      <h3>Achievements Unlocked:</h3>
+    </div>
+  </div>
+
+  <div class="section" id="saveImportExport">
+    <h2>Save / Load</h2>
+    <button id="exportBtn">Export Save</button><br />
+    <input type="text" id="saveCodeInput" placeholder="Paste save code here" />
+    <button id="importBtn">Import Save</button>
+  </div>
+
+  <div class="section">
+    <button id="soundToggle">Sound: ON</button>
+    <button id="resetButton">Reset Game</button>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <script>
+    (() => {
+      // =======================
+      // FULL AXY MONEY CLICKER JS
+      // =======================
+      let money = 0, moneyPerClick = 1, clickUpgradeCost = 50;
+      let autoClickerCount = 0, autoClickerCost = 100;
+      let megaTapCount = 0, megaTapCost = 1000;
+      let superAutoClickerCount = 0, superAutoClickerCost = 5000;
+      let multiplierUpgradeCount = 0, multiplierUpgradeCost = 10000;
+      let prestigePoints = 0, prestigeMultiplier = 1.0;
+      let cheatMode = false, slotsWins = 0, soundEnabled = true;
+
+      // DOM Elements
+      const moneyEl = document.getElementById("money");
+      const clickButton = document.getElementById("clickButton");
+      const clickUpgradeCostEl = document.getElementById("clickUpgradeCost");
+      const autoClickerCostEl = document.getElementById("autoClickerCost");
+      const autoClickerCountEl = document.getElementById("autoClickerCount");
+      const megaTapCostEl = document.getElementById("megaTapCost");
+      const megaTapCountEl = document.getElementById("megaTapCount");
+      const superAutoClickerCostEl = document.getElementById("superAutoClickerCost");
+      const superAutoClickerCountEl = document.getElementById("superAutoClickerCount");
+      const multiplierUpgradeCostEl = document.getElementById("multiplierUpgradeCost");
+      const multiplierUpgradeCountEl = document.getElementById("multiplierUpgradeCount");
+      const prestigePointsEl = document.getElementById("prestigePoints");
+      const prestigeMultiplierEl = document.getElementById("prestigeMultiplier");
+      const prestigeButton = document.getElementById("prestigeButton");
+      const messageEl = document.getElementById("message");
+      const slotsEl = document.getElementById("slots");
+      const slotsMessageEl = document.getElementById("slotsMessage");
+      const slotsSpinBtn = document.getElementById("slotsSpinBtn");
+      const achievementsEl = document.getElementById("achievements");
+      const exportBtn = document.getElementById("exportBtn");
+      const importBtn = document.getElementById("importBtn");
+      const saveCodeInput = document.getElementById("saveCodeInput");
+      const soundToggle = document.getElementById("soundToggle");
+      const resetButton = document.getElementById("resetButton");
+
+      // Sounds
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      function playSound(freq = 440, duration = 100) {
+        if (!soundEnabled) return;
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.type = "square";
+        oscillator.frequency.value = freq;
+        oscillator.start();
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        oscillator.stop(audioCtx.currentTime + duration / 1000);
+      }
+
+      // Achievements
+      const achievements = [
+        { id: 1, name: "First Click", desc: "Make your first click", condition: () => money > 0, achieved: false },
+        { id: 2, name: "Rich!", desc: "Reach $1000", condition: () => money >= 1000, achieved: false },
+        { id: 3, name: "Millionaire", desc: "Reach $1,000,000", condition: () => money >= 1000000, achieved: false },
+        { id: 4, name: "Auto Clicker Owner", desc: "Buy an Auto Clicker", condition: () => autoClickerCount > 0, achieved: false },
+        { id: 5, name: "Prestigious", desc: "Gain your first Prestige Point", condition: () => prestigePoints > 0, achieved: false },
+        { id: 6, name: "Slots Winner", desc: "Win the slot jackpot", condition: () => slotsWins > 0, achieved: false },
+      ];
+
+      function checkAchievements() {
+        let newUnlock = false;
+        achievements.forEach(a => {
+          if (!a.achieved && a.condition()) {
+            a.achieved = true;
+            newUnlock = true;
+          }
+        });
+        renderAchievements();
+      }
+
+      function renderAchievements() {
+        let html = "<h3>Achievements Unlocked:</h3><ul>";
+        achievements.forEach(a => {
+          if (a.achieved) html += `<li>${a.name}: ${a.desc}</li>`;
+        });
+        html += "</ul>";
+        achievementsEl.innerHTML = html;
+      }
+
+      // UI update
+      function updateUI() {
+        moneyEl.textContent = `$${Math.floor(money)}`;
+        clickUpgradeCostEl.textContent = clickUpgradeCost;
+        autoClickerCostEl.textContent = autoClickerCost;
+        autoClickerCountEl.textContent = autoClickerCount;
+        megaTapCostEl.textContent = megaTapCost;
+        megaTapCountEl.textContent = megaTapCount;
+        superAutoClickerCostEl.textContent = superAutoClickerCost;
+        superAutoClickerCountEl.textContent = superAutoClickerCount;
+        multiplierUpgradeCostEl.textContent = multiplierUpgradeCost;
+        multiplierUpgradeCountEl.textContent = multiplierUpgradeCount;
+        prestigePointsEl.textContent = prestigePoints;
+        prestigeMultiplierEl.textContent = prestigeMultiplier.toFixed(2);
+        soundToggle.textContent = `Sound: ${soundEnabled ? "ON" : "OFF"}`;
+      }
+
+      // Click
+      clickButton.addEventListener("click", () => {
+        money += (moneyPerClick + megaTapCount * 10) * prestigeMultiplier;
+        updateUI();
+        checkAchievements();
+      });
+
+      // Buy upgrades
+      document.getElementById("buyClickUpgrade").addEventListener("click", () => {
+        if (money >= clickUpgradeCost) {
+          money -= clickUpgradeCost;
+          moneyPerClick += 1;
+          clickUpgradeCost = Math.floor(clickUpgradeCost * 1.5);
+          playSound(600, 100);
+          updateUI();
+          checkAchievements();
+          saveGame();
+        }
+      });
+      document.getElementById("buyAutoClicker").addEventListener("click", () => {
+        if (money >= autoClickerCost) {
+          money -= autoClickerCost;
+          autoClickerCount++;
+          autoClickerCost = Math.floor(autoClickerCost * 1.6);
+          updateUI();
+          saveGame();
+        }
+      });
+      document.getElementById("buyMegaTap").addEventListener("click", () => {
+        if (money >= megaTapCost) {
+          money -= megaTapCost;
+          megaTapCount++;
+          megaTapCost = Math.floor(megaTapCost * 1.7);
+          updateUI();
+          saveGame();
+        }
+      });
+      document.getElementById("buySuperAutoClicker").addEventListener("click", () => {
+        if (money >= superAutoClickerCost) {
+          money -= superAutoClickerCost;
+          superAutoClickerCount++;
+          superAutoClickerCost = Math.floor(superAutoClickerCost * 1.7);
+          updateUI();
+          saveGame();
+        }
+      });
+      document.getElementById("buyMultiplierUpgrade").addEventListener("click", () => {
+        if (money >= multiplierUpgradeCost) {
+          money -= multiplierUpgradeCost;
+          multiplierUpgradeCount++;
+          multiplierUpgradeCost = Math.floor(multiplierUpgradeCost * 2);
+          prestigeMultiplier = 1 + prestigePoints * 0.1 + multiplierUpgradeCount * 0.1;
+          updateUI();
+          saveGame();
+        }
+      });
+
+      // Auto clicker
+      setInterval(() => {
+        money += autoClickerCount * prestigeMultiplier;
+        money += superAutoClickerCount * 10 * prestigeMultiplier;
+        updateUI();
+        checkAchievements();
+      }, 1000);
+
+      // Initial UI
+      updateUI();
+      renderAchievements();
+
+      // Save/load
+      function saveGame() {
+        const data = {
+          money, moneyPerClick, clickUpgradeCost, autoClickerCount, autoClickerCost,
+          megaTapCount, megaTapCost, superAutoClickerCount, superAutoClickerCost,
+          multiplierUpgradeCount, multiplierUpgradeCost, prestigePoints, prestigeMultiplier,
+          slotsWins, cheatMode, soundEnabled
+        };
+        localStorage.setItem("axyMoneyClickerSave", btoa(JSON.stringify(data)));
+      }
+
+      function loadGame() {
+        const dataStr = localStorage.getItem("axyMoneyClickerSave");
+        if (!dataStr) return;
+        const data = JSON.parse(atob(dataStr));
+        Object.assign(window, data);
+        updateUI();
+        renderAchievements();
+      }
+
+      loadGame();
+      setInterval(saveGame, 15000);
+
+    })();
+  </script>
+</body>
+
+</html>

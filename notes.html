@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AXY Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="grid"></div>
+
+<header>
+  <h1>AXY Study Site</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="notes.html">Notes</a>
+    <a href="bypasses.html">Bypasses</a>
+    <a href="music.html">Music</a>
+    <a href="credits.html">Credits</a>
+    <a href="other1.html">Suggestions/Reports</a>
+    <a href="other2.html">Other</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Notes</h2>
+  <p>Quick study notes and placeholders.</p>
+</section>
+
+<main>
+<div class="notice">Notes area — placeholders below. Replace with your notes or a small editor.</div>
+<div class="notes-grid">
+  <div class="note"><strong>Math — Algebra</strong><p>Study linear equations, practice factoring.</p></div>
+  <div class="note"><strong>History — WWII</strong><p>Key dates: 1939–1945. Review major battles.</p></div>
+  <div class="note"><strong>Computer Science</strong><p>Algorithms: binary search, sorting basics.</p></div>
+  <div class="note"><strong>Language</strong><p>Vocabulary & grammar practice.</p></div>
+</div>
+</main>
+
+<footer>© 2025 AXY Study Site. All rights reserved.</footer>
+
+<!-- Theme Box -->
+<div id="themeBox">
+  Theme:
+  <select id="themeSelect">
+    <option value="red">Red</option>
+    <option value="navy">Navy Blue</option>
+    <option value="green">Cyber Green</option>
+    <option value="purple">Purple</option>
+    <option value="custom">Customize...</option>
+  </select>
+</div>
+
+<!-- Customize Panel -->
+<div id="customPanel">
+  <div><label>Main:</label><input type="color" id="mainColor" value="#ff1e1e"></div>
+  <div><label>Glow:</label><input type="color" id="glowColor" value="#ff3c3c"></div>
+  <div><label>Trail:</label><input type="color" id="trailColor" value="#ff3232"></div>
+  <div><label>Ambient:</label><input type="color" id="ambientColor" value="#ff3232"></div>
+  <div><label>Body BG:</label><input type="color" id="bgColor" value="#190000"></div>
+  <div><label>Hero BG:</label><input type="color" id="heroBgColor" value="#190000"></div>
+  <div><label>Footer BG:</label><input type="color" id="footerBgColor" value="#0a0000"></div>
+  <button id="saveCustom">Save Theme</button>
+  <button id="resetTheme">Reset to Red</button>
+</div>
+
+<script src="theme.js"></script>
+</body>
+</html>
