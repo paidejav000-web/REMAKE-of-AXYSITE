@@ -1,52 +1,85 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-	<base href="https://cdn.jsdelivr.net/gh/genizy/polytrack@main/">
-	<script>
-		window.jkdfgnjkndfg = document.querySelector('base').href;
-		fetch("simulation_worker.bundle.js").then(res => res.text()).then(text => {
-			const blob = new Blob([text.replaceAll("replacethisplease", window.jkdfgnjkndfg)], { type: 'application/javascript' });
-			window.simulationworker = URL.createObjectURL(blob);
-		});
-		const ogworker = window.Worker;
-		window.Worker = function (scripturl, options) {
-			if (typeof scripturl === 'string' && scripturl.toLowerCase() === "simulation_worker.bundle.js") {
-				scripturl = window.simulationworker;
-			}
-			return new ogworker(scripturl, options);
-		};
-		window.Worker.prototype = ogworker.prototype;
+  <base href="https://cdn.jsdelivr.net/gh/genizy/polytrack@main/">
 
-		const ogfetch = window.fetch;
-		window.fetch = async function (input, init) {
-			if (typeof input === "string") {
-				input = input.replace("vps.kodub.com:43273", "vpskodub.tmena1565.workers.dev");
-			} else if (input instanceof Request) {
-				const newUrl = input.url.replace("vps.kodub.com:43273", "vpskodub.tmena1565.workers.dev");
-				input = new Request(newUrl, input);
-			}
-			return ogfetch(input, init);
-		};
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 
-		const ogxml = XMLHttpRequest.prototype.open;
-		XMLHttpRequest.prototype.open = function (method, url, ...rest) {
-			if (typeof url === "string") {
-				url = url.replace("vps.kodub.com:43273", "vpskodub.tmena1565.workers.dev");
-			}
-			return ogxml.call(this, method, url, ...rest);
-		};
-	</script>
-	<link rel="manifest" href="manifest.json" />
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    (async () => {
+      const baseHref = document.querySelector("base").href;
+
+      // Load and rewrite worker FIRST
+      const res = await fetch("simulation_worker.bundle.js");
+      const text = await res.text();
+
+      const blob = new Blob(
+        [text.replaceAll("replacethisplease", baseHref)],
+        { type: "application/javascript" }
+      );
+
+      const workerURL = URL.createObjectURL(blob);
+
+      // Override Worker AFTER blob exists
+      const OriginalWorker = window.Worker;
+      window.Worker = function (scriptURL, options) {
+        if (
+          typeof scriptURL === "string" &&
+          scriptURL.endsWith("simulation_worker.bundle.js")
+        ) {
+          scriptURL = workerURL;
+        }
+        return new OriginalWorker(scriptURL, options);
+      };
+      window.Worker.prototype = OriginalWorker.prototype;
+
+      // Patch fetch
+      const originalFetch = window.fetch;
+      window.fetch = function (input, init) {
+        if (typeof input === "string") {
+          input = input.replace(
+            "vps.kodub.com:43273",
+            "vpskodub.tmena1565.workers.dev"
+          );
+        } else if (input instanceof Request) {
+          input = new Request(
+            input.url.replace(
+              "vps.kodub.com:43273",
+              "vpskodub.tmena1565.workers.dev"
+            ),
+            input
+          );
+        }
+        return originalFetch(input, init);
+      };
+
+      // Patch XHR
+      const originalOpen = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+        if (typeof url === "string") {
+          url = url.replace(
+            "vps.kodub.com:43273",
+            "vpskodub.tmena1565.workers.dev"
+          );
+        }
+        return originalOpen.call(this, method, url, ...rest);
+      };
+
+      // NOW load main bundle
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = "main.bundle.js";
+      document.body.appendChild(script);
+    })();
+  </script>
 </head>
 
 <body>
-	<canvas id="screen"></canvas>
-	<div id="ui"></div>
-	<div id="transition-layer"></div>
-
-	<script type="module" src="main.bundle.js" defer></script>
+  <canvas id="screen"></canvas>
+  <div id="ui"></div>
+  <div id="transition-layer"></div>
 </body>
-
 </html>
