@@ -2,9 +2,13 @@ const CACHE_NAME = "axysite-cache-v1";
 const FILES_TO_CACHE = [
   "/",
   "/index.html",
+  "/polytrack.html",
   "/style.css",
   "/theme.js",
-  "/polytrack.html"
+  "/main.bundle.js",
+  "/simulation_worker.bundle.js",
+  "/icon-192.png",
+  "/icon-512.png"
 ];
 
 self.addEventListener("install", evt => {
