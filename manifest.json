@@ -1,7 +1,8 @@
 {
   "name": "AXYSITE",
   "short_name": "AXYSITE",
-  "start_url": "/",
+  "start_url": "/REMAKE-of-AXYSITE/",
+  "scope": "/REMAKE-of-AXYSITE/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
