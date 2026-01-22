@@ -6,7 +6,7 @@
   <title>AXYSITE</title>
 
   <!-- PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/REMAKE-of-AXYSITE/manifest.json">
   <meta name="theme-color" content="#000000">
 
   <!-- Base URL for polytrack CDN -->
@@ -15,7 +15,7 @@
   <!-- PWA Service Worker Registration -->
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('/REMAKE-of-AXYSITE/sw.js')
         .then(() => console.log('Service Worker registered'))
         .catch(err => console.error('SW failed:', err));
     }
