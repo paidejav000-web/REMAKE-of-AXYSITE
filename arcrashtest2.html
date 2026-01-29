@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Car Crash Test 2 | AXY Games</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  .game-wrapper {
+    width: 100%;
+    height: calc(100vh - 220px);
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 30px var(--glow, red);
+  }
+
+  .game-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .game-header {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .game-header h2 {
+    font-size: 2rem;
+  }
+
+  .game-header p {
+    opacity: 0.8;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: var(--main, #ff1e1e);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 0 12px var(--glow, #ff3c3c);
+  }
+
+  .back-btn:hover {
+    opacity: 0.85;
+  }
+</style>
+</head>
+
+<body>
+<canvas id="bg"></canvas>
+<div class="grid"></div>
+
+<header>
+  <h1>AXY Study Site</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="notes.html">Notes</a>
+    <a href="bypasses.html">Bypasses</a>
+    <a href="music.html">Music</a>
+    <a href="credits.html">Credits</a>
+    <a href="other1.html">Suggestions/Reports</a>
+    <a href="other2.html">Other</a>
+  </nav>
+</header>
+
+<section class="hero game-header">
+  <h2>Car Crash Test 2</h2>
+  <p>Crash, destroy, and test vehicle physics.</p>
+  <a class="back-btn" href="games.html">← Back to Games</a>
+</section>
+
+<main>
+  <div class="game-wrapper">
+    <iframe
+      src="https://classroom6x.org/en/full/car-crash-test-2"
+      allowfullscreen>
+    </iframe>
+  </div>
+</main>
+
+<footer>© 2026 AXY Study Site. All rights reserved.</footer>
+
+<script src="theme.js"></script>
+</body>
+</html>
