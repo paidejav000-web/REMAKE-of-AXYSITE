@@ -3,16 +3,170 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+
 <title>AXY Study Site - Home</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="style.css">
+
+<style>
+
+/* =========================
+   OFFICIAL POPUP
+========================= */
+
+#officialPopupOverlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,0.78);
+
+    backdrop-filter:blur(6px);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:999999;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:
+    opacity .45s ease,
+    visibility .45s ease;
+}
+
+#officialPopupOverlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+#officialPopup{
+    width:90%;
+    max-width:520px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #050505,
+    #111111
+    );
+
+    border:2px solid #d4af37;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    color:white;
+
+    text-align:center;
+
+    position:relative;
+
+    box-shadow:
+    0 0 30px rgba(212,175,55,.45),
+    0 0 80px rgba(212,175,55,.15);
+
+    transform:
+    translateY(40px)
+    scale(.92);
+
+    opacity:0;
+
+    transition:
+    transform .45s ease,
+    opacity .45s ease;
+}
+
+#officialPopupOverlay.show #officialPopup{
+    transform:
+    translateY(0)
+    scale(1);
+
+    opacity:1;
+}
+
+#popupClose{
+    position:absolute;
+
+    top:12px;
+    right:18px;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    color:#d4af37;
+
+    transition:.2s ease;
+}
+
+#popupClose:hover{
+    color:white;
+    transform:scale(1.15);
+}
+
+#officialPopup h1{
+    margin-top:0;
+
+    color:#d4af37;
+
+    font-size:2.2rem;
+
+    text-shadow:
+    0 0 12px rgba(212,175,55,.5);
+}
+
+#officialPopup p{
+    color:#dddddd;
+
+    line-height:1.7;
+
+    font-size:1.05rem;
+}
+
+#popupButton{
+    display:inline-block;
+
+    margin-top:22px;
+
+    padding:13px 28px;
+
+    background:#d4af37;
+
+    color:black;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    border-radius:14px;
+
+    transition:.25s ease;
+}
+
+#popupButton:hover{
+    background:white;
+
+    transform:
+    translateY(-2px)
+    scale(1.03);
+}
+
+</style>
+
 </head>
 <body>
+
 <canvas id="bg"></canvas>
 <div class="grid"></div>
 
 <header>
   <h1>AXY Study Site</h1>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="games.html">Games</a>
@@ -27,42 +181,217 @@
 
 <section class="hero">
   <h2>Welcome to the Ultimate Study & Game Portal!</h2>
-  <p>Focus. Learn. Play. All in one place — powered by AXY.</p>
+
+  <p>
+    Focus. Learn. Play. All in one place — powered by AXY.
+  </p>
 </section>
 
 <main>
-<div class="notice">⚠️ <strong>Note:</strong> Games labeled as “Game 1”, “Game 2”, etc. are placeholders and not yet available.
-  Check the <a href="games.html">Games page</a> for all playable titles.</div>
-<p>Use the navigation above to explore <strong>Notes</strong>, <strong>Bypasses</strong>, <strong>Music</strong>, and more.</p>
-</main>
 
-<footer>© 2025 AXY Study Site. All rights reserved.</footer>
+<div class="notice">
+⚠️ <strong>Note:</strong>
+Games labeled as “Game 1”, “Game 2”, etc.
+are placeholders and not yet available.
 
-<!-- Theme Box -->
-<div id="themeBox">
-  Theme:
-  <select id="themeSelect">
-    <option value="red">Red</option>
-    <option value="navy">Navy Blue</option>
-    <option value="green">Cyber Green</option>
-    <option value="purple">Purple</option>
-    <option value="custom">Customize...</option>
-  </select>
+Check the <a href="games.html">Games page</a>
+for all playable titles.
 </div>
 
-<!-- Customize Panel -->
+<p>
+Use the navigation above to explore
+<strong>Notes</strong>,
+<strong>Bypasses</strong>,
+<strong>Music</strong>,
+and more.
+</p>
+
+</main>
+
+<footer>
+© 2025 AXY Study Site. All rights reserved.
+</footer>
+
+<!-- THEME BOX -->
+
+<div id="themeBox">
+
+Theme:
+
+<select id="themeSelect">
+
+<option value="red">Red</option>
+<option value="navy">Navy Blue</option>
+<option value="green">Cyber Green</option>
+<option value="purple">Purple</option>
+<option value="custom">Customize...</option>
+
+</select>
+
+</div>
+
+<!-- CUSTOMIZE PANEL -->
+
 <div id="customPanel">
-  <div><label>Main:</label><input type="color" id="mainColor" value="#ff1e1e"></div>
-  <div><label>Glow:</label><input type="color" id="glowColor" value="#ff3c3c"></div>
-  <div><label>Trail:</label><input type="color" id="trailColor" value="#ff3232"></div>
-  <div><label>Ambient:</label><input type="color" id="ambientColor" value="#ff3232"></div>
-  <div><label>Body BG:</label><input type="color" id="bgColor" value="#190000"></div>
-  <div><label>Hero BG:</label><input type="color" id="heroBgColor" value="#190000"></div>
-  <div><label>Footer BG:</label><input type="color" id="footerBgColor" value="#0a0000"></div>
-  <button id="saveCustom">Save Theme</button>
-  <button id="resetTheme">Reset to Red</button>
+
+<div>
+<label>Main:</label>
+<input type="color" id="mainColor" value="#ff1e1e">
+</div>
+
+<div>
+<label>Glow:</label>
+<input type="color" id="glowColor" value="#ff3c3c">
+</div>
+
+<div>
+<label>Trail:</label>
+<input type="color" id="trailColor" value="#ff3232">
+</div>
+
+<div>
+<label>Ambient:</label>
+<input type="color" id="ambientColor" value="#ff3232">
+</div>
+
+<div>
+<label>Body BG:</label>
+<input type="color" id="bgColor" value="#190000">
+</div>
+
+<div>
+<label>Hero BG:</label>
+<input type="color" id="heroBgColor" value="#190000">
+</div>
+
+<div>
+<label>Footer BG:</label>
+<input type="color" id="footerBgColor" value="#0a0000">
+</div>
+
+<button id="saveCustom">
+Save Theme
+</button>
+
+<button id="resetTheme">
+Reset to Red
+</button>
+
+</div>
+
+<!-- =========================
+     OFFICIAL SITE POPUP
+========================= -->
+
+<div id="officialPopupOverlay">
+
+    <div id="officialPopup">
+
+        <div id="popupClose">
+            &times;
+        </div>
+
+        <h1>
+            Official Site Coming Soon
+        </h1>
+
+        <p>
+            A brand new official version of AXY Study Site
+            is currently in development.
+
+            Expect cleaner design, improved features,
+            better optimization, and major updates soon.
+        </p>
+
+        <a id="popupButton" href="#">
+            Stay Tuned
+        </a>
+
+    </div>
+
 </div>
 
 <script src="theme.js"></script>
+
+<script>
+
+/* =========================
+   OFFICIAL POPUP SCRIPT
+========================= */
+
+const popupOverlay =
+document.getElementById(
+"officialPopupOverlay"
+);
+
+const popupClose =
+document.getElementById(
+"popupClose"
+);
+
+/* CHANGE LATER */
+const redirectURL =
+"https://example.com";
+
+/* SHOW ONCE PER VISIT */
+
+if(
+!sessionStorage.getItem(
+"officialPopupShown"
+)
+){
+
+window.addEventListener(
+"load",
+() => {
+
+setTimeout(() => {
+
+popupOverlay.classList.add(
+"show"
+);
+
+}, 700);
+
+sessionStorage.setItem(
+"officialPopupShown",
+"true"
+);
+
+});
+
+}
+
+/* CLOSE BUTTON */
+
+popupClose.addEventListener(
+"click",
+() => {
+
+popupOverlay.classList.remove(
+"show"
+);
+
+}
+);
+
+/* =========================
+   FUTURE AUTO REDIRECT
+   UNCOMMENT LATER
+========================= */
+
+/*
+
+setTimeout(() => {
+
+window.location.href =
+redirectURL;
+
+}, 10000);
+
+*/
+
+</script>
+
 </body>
 </html>
